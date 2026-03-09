@@ -1,0 +1,8 @@
+/target/
+/.classpath
+/.project
+/.settings/
+*.class
+*.war
+*.jar
+!WEB-INF/lib/*.jar
