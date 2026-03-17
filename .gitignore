@@ -5,4 +5,5 @@
 *.class
 *.war
 *.jar
+*.docx
 !WEB-INF/lib/*.jar
