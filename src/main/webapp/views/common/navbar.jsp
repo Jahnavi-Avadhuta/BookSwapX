@@ -4,138 +4,185 @@
 <%
 User navUser = (User) session.getAttribute("loggedInUser");
 %>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-lg"
+	style="background-color: #1C1917; border-bottom: 2px solid #C2410C;">
 	<div class="container">
-		<a class="navbar-brand fw-bold"
-			href="${pageContext.request.contextPath}/user/dashboard"> <i
-			class="bi bi-book-half"></i> BookSwapX
+
+		<!-- LOGO — matches landing page style -->
+		<a class="navbar-brand d-flex align-items-center gap-2"
+			href="${pageContext.request.contextPath}/user/dashboard"
+			style="text-decoration: none;"> <span style="font-size: 1.6rem;">📚</span>
+			<span
+			style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: #1C1917; letter-spacing: 0.5px;">
+				BookSwap<span style="color: #C2410C;">X</span>
+		</span>
 		</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-			data-bs-target="#navbarNav">
+
+		<!-- Mobile toggle -->
+		<button class="navbar-toggler border-0" type="button"
+			data-bs-toggle="collapse" data-bs-target="#navbarNav"
+			style="color: #FAF7F2;">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
 		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav me-auto">
 
-				<%-- Browse Books — everyone sees this --%>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/search"> <i
-						class="bi bi-search"></i> Browse Books
-				</a></li>
+			<!-- Left links — changes based on role -->
+			<ul class="navbar-nav me-auto gap-1 mt-2 mt-lg-0">
 
-				<%-- Post Listing, Matches, Wishlist — users only --%>
-				<%
-				if (navUser != null && "USER".equals(navUser.getRole())) {
-				%>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/listing/post"> <i
-						class="bi bi-plus-circle"></i> Post Listing
-				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/exchange/matches"> <i
-						class="bi bi-arrow-left-right"></i> Matches
-				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/wishlist"> <i
-						class="bi bi-heart"></i> Wishlist
-				</a></li>
-				<%
-				}
-				%>
-
-				<%-- Admin link — admin only --%>
 				<%
 				if (navUser != null && "ADMIN".equals(navUser.getRole())) {
 				%>
-				<li class="nav-item"><a class="nav-link text-warning fw-bold"
-					href="${pageContext.request.contextPath}/views/admin/dashboard.jsp">
-						<i class="bi bi-shield-check"></i> Admin
-				</a></li>
+				<!-- ADMIN links only -->
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/admin/dashboard"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 🛡️
+						Dashboard </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/admin/users"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 👥
+						Manage Users </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/admin/listings"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 📋
+						Manage Listings </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/admin/categories"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 🏷️
+						Categories </a></li>
+
+				<%
+				} else {
+				%>
+				<!-- REGULAR USER links -->
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/search"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 🔍
+						Browse Books </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/listing/post"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> ➕ Post
+						Listing </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/exchange/matches"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 🔄
+						Matches </a></li>
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/user/mybooks"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> ❤️
+						Wishlist </a></li>
 				<%
 				}
 				%>
 
 			</ul>
 
-			<ul class="navbar-nav ms-auto">
+			<!-- Right links -->
+			<!-- Right links -->
+			<ul class="navbar-nav ms-auto align-items-center gap-2 mt-2 mt-lg-0">
 
-				<%-- Messages — users only --%>
 				<%
-				if (navUser != null && "USER".equals(navUser.getRole())) {
+				if (navUser != null && "ADMIN".equals(navUser.getRole())) {
 				%>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/messages"> <i
-						class="bi bi-chat-dots"></i> Messages <%
- if (session.getAttribute("unreadMessages") != null
- 		&& ((Number) session.getAttribute("unreadMessages")).intValue() > 0) {
- %> <span class="badge bg-danger"> <%=session.getAttribute("unreadMessages")%>
-					</span> <%
- }
- %>
-				</a></li>
-				<%
-				}
-				%>
-
-				<%-- Notifications bell — everyone --%>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/user/notifications"> <i
-						class="bi bi-bell"></i> <%
- if (session.getAttribute("unreadNotifications") != null
- 		&& ((Number) session.getAttribute("unreadNotifications")).intValue() > 0) {
- %> <span class="badge bg-danger"> <%=session.getAttribute("unreadNotifications")%>
-					</span> <%
- }
- %>
-				</a></li>
-
-				<%-- User dropdown --%>
-				<%
-				if (navUser != null) {
-				%>
+				<!-- ADMIN right side — only logout -->
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-						<i class="bi bi-person-circle"></i> <%=navUser.getUsername()%>
+					class="nav-link dropdown-toggle d-flex align-items-center gap-2 px-3 py-2 rounded"
+					href="#" data-bs-toggle="dropdown"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> <span
+						style="background-color: #C2410C; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white;">
+							<%=navUser.getUsername().substring(0, 1).toUpperCase()%>
+					</span> <%=navUser.getUsername()%>
 				</a>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<%
-						if ("USER".equals(navUser.getRole())) {
-						%>
-						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/user/profile"> <i
-								class="bi bi-person"></i> Profile
-						</a></li>
-						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/user/dashboard"> <i
-								class="bi bi-speedometer2"></i> Dashboard
-						</a></li>
-						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/user/mybooks"> <i
-								class="bi bi-book"></i> My Books
-						</a></li>
-
-						<%-- ADD TRANSACTIONS LINK HERE --%>
-						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/user/transactions">
-								<i class="bi bi-clock-history"></i> Transactions
-						</a></li>
-
-						<%
-						} else if ("ADMIN".equals(navUser.getRole())) {
-						%>
-						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/admin/dashboard"> <i
-								class="bi bi-speedometer2"></i> Admin Dashboard
-						</a></li>
-						<%
-						}
-						%>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item text-danger"
-							href="${pageContext.request.contextPath}/auth/logout"> <i
-								class="bi bi-box-arrow-right"></i> Logout
-						</a></li>
+					<ul class="dropdown-menu dropdown-menu-end shadow"
+						style="background-color: #1C1917; border: 1px solid #C2410C; min-width: 180px;">
+						<li><a class="dropdown-item py-2"
+							href="${pageContext.request.contextPath}/auth/logout"
+							style="color: #ef4444; font-family: 'DM Sans', sans-serif;"
+							onmouseover="this.style.backgroundColor='#C2410C';this.style.color='white'"
+							onmouseout="this.style.backgroundColor='transparent';this.style.color='#ef4444'">
+								🚪 Logout </a></li>
 					</ul></li>
+
+				<%
+				} else {
+				%>
+				<!-- REGULAR USER right side -->
+
+				<!-- Messages -->
+				<li class="nav-item"><a class="nav-link px-3 py-2 rounded"
+					href="${pageContext.request.contextPath}/messages"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 💬
+						Messages </a></li>
+
+				<!-- Notifications -->
+				<li class="nav-item"><a class="nav-link px-2 py-2 rounded"
+					href="${pageContext.request.contextPath}/user/notifications"
+					style="color: #FAF7F2; font-size: 1.1rem;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> 🔔 </a></li>
+
+				<!-- User dropdown -->
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle d-flex align-items-center gap-2 px-3 py-2 rounded"
+					href="#" data-bs-toggle="dropdown"
+					style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+					onmouseover="this.style.backgroundColor='#C2410C'"
+					onmouseout="this.style.backgroundColor='transparent'"> <span
+						style="background-color: #C2410C; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white;">
+							<%=navUser.getUsername().substring(0, 1).toUpperCase()%>
+					</span> <%=navUser.getUsername()%>
+				</a>
+					<ul class="dropdown-menu dropdown-menu-end shadow"
+						style="background-color: #1C1917; border: 1px solid #C2410C; min-width: 180px;">
+						<li><a class="dropdown-item py-2"
+							href="${pageContext.request.contextPath}/user/profile"
+							style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+							onmouseover="this.style.backgroundColor='#C2410C'"
+							onmouseout="this.style.backgroundColor='transparent'"> 👤
+								Profile </a></li>
+						<li><a class="dropdown-item py-2"
+							href="${pageContext.request.contextPath}/user/mybooks"
+							style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+							onmouseover="this.style.backgroundColor='#C2410C'"
+							onmouseout="this.style.backgroundColor='transparent'"> 📚 My
+								Books </a></li>
+						<li><a class="dropdown-item py-2"
+							href="${pageContext.request.contextPath}/user/dashboard"
+							style="color: #FAF7F2; font-family: 'DM Sans', sans-serif;"
+							onmouseover="this.style.backgroundColor='#C2410C'"
+							onmouseout="this.style.backgroundColor='transparent'"> 📊
+								Dashboard </a></li>
+						<li><hr class="dropdown-divider"
+								style="border-color: #C2410C; opacity: 0.3;"></li>
+						<li><a class="dropdown-item py-2"
+							href="${pageContext.request.contextPath}/auth/logout"
+							style="color: #ef4444; font-family: 'DM Sans', sans-serif;"
+							onmouseover="this.style.backgroundColor='#C2410C';this.style.color='white'"
+							onmouseout="this.style.backgroundColor='transparent';this.style.color='#ef4444'">
+								🚪 Logout </a></li>
+					</ul></li>
+
 				<%
 				}
 				%>

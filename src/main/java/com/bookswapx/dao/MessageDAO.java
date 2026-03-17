@@ -1,12 +1,16 @@
 package com.bookswapx.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bookswapx.dao.interfaces.MessageDAOInterface;
 import com.bookswapx.db.DBConnection;
 import com.bookswapx.model.Message;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.bookswapx.model.User;
 
 public class MessageDAO implements MessageDAOInterface {
 
@@ -98,5 +102,40 @@ public class MessageDAO implements MessageDAOInterface {
 			e.printStackTrace();
 		}
 		return userIds;
+	}
+
+	public List<User> getAllConversations(int userId) {
+		// Returns list of users this person has chatted with
+		String sql = "SELECT DISTINCT u.* FROM users u " + "JOIN messages m ON "
+				+ "(m.sender_id = u.user_id AND m.receiver_id = ?) OR "
+				+ "(m.receiver_id = u.user_id AND m.sender_id = ?) " + "WHERE u.user_id != ? " + "ORDER BY u.username";
+
+		List<User> users = new ArrayList<>();
+		try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, userId);
+			ps.setInt(2, userId);
+			ps.setInt(3, userId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					users.add(mapUser(rs));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	private User mapUser(ResultSet rs) throws SQLException {
+		User user = new User();
+		user.setUserId(rs.getInt("user_id"));
+		user.setUsername(rs.getString("username"));
+		user.setEmail(rs.getString("email"));
+		user.setLocation(rs.getString("location"));
+		user.setRole(rs.getString("role"));
+		user.setTrustScore(rs.getDouble("trust_score"));
+		user.setActive(rs.getBoolean("is_active"));
+		user.setProfilePicture(rs.getString("profile_picture"));
+		return user;
 	}
 }

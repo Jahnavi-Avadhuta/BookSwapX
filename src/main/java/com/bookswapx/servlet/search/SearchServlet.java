@@ -4,7 +4,6 @@ import com.bookswapx.dao.BookDAO;
 import com.bookswapx.dao.CategoryDAO;
 import com.bookswapx.dao.ListingDAO;
 import com.bookswapx.model.Book;
-import com.bookswapx.model.Category;
 import com.bookswapx.model.Listing;
 import com.bookswapx.model.User;
 import jakarta.servlet.ServletException;
